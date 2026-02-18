@@ -8,9 +8,16 @@ from database import engine, get_database
 app=FastAPI()
 tables.Base.metadata.create_all(bind=engine)
 
+OPERATORS = {
+    ">=":"__ge__",
+    "<=":"__le__",
+    ">":"__gt__",
+    "<": "__lt__"
+}
+
 @app.get("/")
 def helloworld():
-    return {"hi":"helloworld"}
+    return {"recipe":"helloworld"}
 
 @app.get("/recipes")
 def get_paginated_recipes(page: int = 1, limit: int = 10, db: Session = Depends(get_database)):
